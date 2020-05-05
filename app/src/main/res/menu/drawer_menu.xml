@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_faq"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="Frequently Asked Questions" />
+        <item
+            android:id="@+id/nav_calendar"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="Calendar" />
+
+
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_launcher_background"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_launcher_background"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>
