@@ -1,8 +1,9 @@
-package com.example.zakatapp3;
+package com.example.zakatapp3.Adapters;
 
 import com.example.zakatapp3.Fragments.AssetsFragment;
 import com.example.zakatapp3.Fragments.CalculateFragment;
 import com.example.zakatapp3.Fragments.LiabilityFragment;
+import com.example.zakatapp3.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +13,11 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class FragmentTabsPagerAdapter extends FragmentPagerAdapter {
 
+    private static int NUMBER_OF_FRAGMENTS = 3;
+    private static String FRAGMENT_TAB1 = "Assets";
+    private static String FRAGMENT_TAB2 = "Liabilities";
+    private static String FRAGMENT_TAB3 = "Calculate";
+
 
     public FragmentTabsPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
@@ -20,7 +26,7 @@ public class FragmentTabsPagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = null;
+        Fragment fragment;
         if (position == 0) {
             fragment = new AssetsFragment();
         }
@@ -39,19 +45,19 @@ public class FragmentTabsPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         CharSequence title;
         if (position == 0) {
-            title = "Assets";
+            title = FRAGMENT_TAB1;
         }
         else if (position == 1) {
-            title = "Liabilities";
+            title = FRAGMENT_TAB2;
         }
         else {
-            title = "Calculate";
+            title = FRAGMENT_TAB3;
         }
         return (title);
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return NUMBER_OF_FRAGMENTS;
     }
 }

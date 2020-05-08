@@ -1,12 +1,11 @@
 package com.example.zakatapp3;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import com.example.zakatapp3.Fragments.LiabilityFragment;
+import com.example.zakatapp3.Adapters.FragmentTabsPagerAdapter;
+import com.example.zakatapp3.Models.MetalDataSet;
 import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -24,7 +23,6 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,10 +32,6 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
-    private static String API_KEY = "EhkfvazyLhnSSAVAM2qj";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,13 +39,18 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = findViewById(R.id.view_pager);
         TabLayout tabLayout = findViewById(R.id.tab_layout);
 
-        FragmentTabsPagerAdapter fragmentTabsPagerAdapter = new FragmentTabsPagerAdapter(getSupportFragmentManager(), FragmentTabsPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        FragmentTabsPagerAdapter fragmentTabsPagerAdapter = new
+                FragmentTabsPagerAdapter(getSupportFragmentManager(),
+                FragmentTabsPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
         viewPager.setAdapter(fragmentTabsPagerAdapter);
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
+    }
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+}
+    /*
+    HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
@@ -95,10 +94,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+     */
 
-    }
-
-    Locale getCurrentLocale(Context context){
+/*
+Locale getCurrentLocale(Context context){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
             return context.getResources().getConfiguration().getLocales().get(0);
         } else{
@@ -106,11 +105,5 @@ public class MainActivity extends AppCompatActivity {
             return context.getResources().getConfiguration().locale;
         }
     }
+ */
 
-
-    public void calculateOnClick (View view) {
-        LiabilityFragment fragment = (LiabilityFragment) getSupportFragmentManager().getFragments().get(1);
-
-    }
-
-}

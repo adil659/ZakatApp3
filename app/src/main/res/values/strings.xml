@@ -3,4 +3,13 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="tab1_fragment">Assets</string>
+    <string name="tab2_fragment">Liabilities</string>
+    <string name="tab3_fragment">Calculate</string>
+
+    <string name="GOLD">GOLD</string>
+    <string name="SILVER">SILVER</string>
+
+
 </resources>

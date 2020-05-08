@@ -1,4 +1,4 @@
-package com.example.zakatapp3;
+package com.example.zakatapp3.Models;
 
 public class ZakatItemModel {
     String item;

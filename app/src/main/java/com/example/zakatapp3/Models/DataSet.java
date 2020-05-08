@@ -1,4 +1,4 @@
-package com.example.zakatapp3;
+package com.example.zakatapp3.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

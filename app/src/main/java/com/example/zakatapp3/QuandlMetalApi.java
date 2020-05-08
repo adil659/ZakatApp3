@@ -1,5 +1,7 @@
 package com.example.zakatapp3;
 
+import com.example.zakatapp3.Models.MetalDataSet;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -11,7 +13,7 @@ public interface QuandlMetalApi {
     @Headers("Accept: application/json")
     @GET("api/v3/datasets/LBMA/{metal}")
     Call<MetalDataSet> getMetalValue(@Path("metal") String metal,
-                                    @Query("start_date") String start_date,
-                                    @Query("end_date") String end_date,
-                                    @Query("api_key") String api_key);
+                                     @Query("start_date") String start_date,
+                                     @Query("end_date") String end_date,
+                                     @Query("api_key") String api_key);
 }

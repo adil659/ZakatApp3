@@ -1,18 +1,19 @@
-package com.example.zakatapp3;
+package com.example.zakatapp3.Adapters;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.zakatapp3.Models.MetalDataSet;
+import com.example.zakatapp3.Models.ZakatItemModel;
+import com.example.zakatapp3.R;
+
 import java.util.ArrayList;
-import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -25,8 +26,52 @@ public class LiabilityRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
     ArrayList<ZakatItemModel> mDataset;
     ArrayList<ZakatItemModel> currentList;
 
-    static String GOLD = "Gold(g)";
-    static String SILVER = "Silver(g)";
+    private double goldValue;
+    private String goldDay;
+    private String goldMonth;
+    private String goldYear;
+
+    public void setGoldDay(String goldDay) {
+        this.goldDay = goldDay;
+    }
+
+    public void setGoldMonth(String goldMonth) {
+        this.goldMonth = goldMonth;
+    }
+
+    public void setGoldYear(String goldYear) {
+        this.goldYear = goldYear;
+    }
+
+    public void setSilverDay(String silverDay) {
+        this.silverDay = silverDay;
+    }
+
+    public void setSilverMonth(String silverMonth) {
+        this.silverMonth = silverMonth;
+    }
+
+    public void setSilverYear(String silverYear) {
+        this.silverYear = silverYear;
+    }
+
+    private double silverValue;
+    private String silverDay;
+    private String silverMonth;
+    private String silverYear;
+
+
+
+    public void setGoldValue(Double goldValue) {
+        this.goldValue = goldValue;
+    }
+
+    public void setSilverValue(double silverValue) {
+        this.silverValue = silverValue;
+    }
+
+    private static String GOLD = "Gold(g)";
+    private static String SILVER = "Silver(g)";
 
     private static int TYPE_EXTRA_INFO_ITEM = 1;
     private static int TYPE_NORMAL_ITEM = 2;
@@ -104,14 +149,27 @@ public class LiabilityRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
             infoViewHolder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d(TAG, "onClick: Clicked on gold or silver");
-                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    if (mDataset.get(position).getItem().equals(GOLD)) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
 
-                    builder.setMessage("Whats goodie" )
-                            .setTitle("AYO");
+                        builder.setMessage("The price of gold as of " + goldDay + " " +
+                                goldMonth + ", " + goldYear + "\n is " + goldValue + "/g")
+                                .setTitle("Gold");
 
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    }
+                    else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+
+                        builder.setMessage("The price of silver as of " + silverDay + " " +
+                                silverMonth + ", " + silverYear + "\n is " + silverValue + "/g")
+                                .setTitle("Silver");
+
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    }
+
                 }
             });
 
