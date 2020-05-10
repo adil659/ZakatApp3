@@ -11,5 +11,8 @@
     <string name="GOLD">GOLD</string>
     <string name="SILVER">SILVER</string>
 
+    <string name="zakat_eligible_yes">Yes</string>
+    <string name="zakat_eligible_no">Yes</string>
+
 
 </resources>

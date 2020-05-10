@@ -150,32 +150,36 @@ public class LiabilityRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
                 @Override
                 public void onClick(View view) {
                     if (mDataset.get(position).getItem().equals(GOLD)) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-
-                        builder.setMessage("The price of gold as of " + goldDay + " " +
-                                goldMonth + ", " + goldYear + "\n is " + goldValue + "/g")
-                                .setTitle("Gold");
-
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.show();
+                        createGoldAlertDialog(view);
                     }
                     else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-
-                        builder.setMessage("The price of silver as of " + silverDay + " " +
-                                silverMonth + ", " + silverYear + "\n is " + silverValue + "/g")
-                                .setTitle("Silver");
-
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.show();
+                        createSilverAlertDialog(view);
                     }
-
                 }
             });
-
         }
+    }
 
+    public void createGoldAlertDialog(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
 
+        builder.setMessage("The price of gold as of " + goldDay + " " +
+                goldMonth + ", " + goldYear + "\n is " + goldValue + "/g")
+                .setTitle(R.string.GOLD);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    public void createSilverAlertDialog(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+
+        builder.setMessage("The price of silver as of " + silverDay + " " +
+                silverMonth + ", " + silverYear + "\n is " + silverValue + "/g")
+                .setTitle(R.string.SILVER);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override

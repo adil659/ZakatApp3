@@ -30,9 +30,6 @@ public class SharedDataViewModel extends ViewModel implements Callback<MetalData
     private MutableLiveData<MetalDataSet> silverDataSet = new MutableLiveData<>();
 
 
-    private String date;
-
-
 
     public MutableLiveData<ArrayList<ZakatItemModel>> getLiabilityZakatItemList() {
         return liabilityItemList;
@@ -54,7 +51,6 @@ public class SharedDataViewModel extends ViewModel implements Callback<MetalData
         SimpleDateFormat apiDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()); // get todays date and make it in this format
         Date todayDate = Calendar.getInstance().getTime();
         String today = apiDateFormat.format(todayDate);
-        date = today;
         QuandlMetalApiClient.getInstance().getMetalData(metal, today).enqueue(SharedDataViewModel.this);
         return goldDataSet;
     }
@@ -67,7 +63,6 @@ public class SharedDataViewModel extends ViewModel implements Callback<MetalData
         SimpleDateFormat apiDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()); // get todays date and make it in this format
         Date todayDate = Calendar.getInstance().getTime();
         String today = apiDateFormat.format(todayDate);
-        date = today;
         QuandlMetalApiClient.getInstance().getMetalData(metal, today).enqueue(SharedDataViewModel.this);
         return silverDataSet;
     }
@@ -93,7 +88,6 @@ public class SharedDataViewModel extends ViewModel implements Callback<MetalData
 
         } else {
             String endDate = metalDataSet.getDataset().end_date;
-            date = endDate;
             QuandlMetalApiClient quandlMetalApiClient = QuandlMetalApiClient.getInstance();
             if(metal.equals("GOLD")) {
                 quandlMetalApiClient.getMetalData("GOLD", endDate).enqueue(SharedDataViewModel.this);

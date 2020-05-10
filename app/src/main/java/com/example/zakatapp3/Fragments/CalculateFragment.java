@@ -31,7 +31,6 @@ public class CalculateFragment extends Fragment {
     private SharedDataViewModel sharedDataViewModel;
 
 
-
     private TextView zakatEligible;
     private TextView amountPay;
 
@@ -47,7 +46,7 @@ public class CalculateFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.tab3_calculate_fragment,container,false);
+        View view = inflater.inflate(R.layout.tab3_calculate_fragment, container, false);
         button = view.findViewById(R.id.calculate_button);
         amountPay = view.findViewById(R.id.amount_pay);
         zakatEligible = view.findViewById(R.id.zakat_eligible);
@@ -62,18 +61,26 @@ public class CalculateFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         sharedDataViewModel = new ViewModelProvider(requireActivity()).get(SharedDataViewModel.class);
+        observeAssetItemList(sharedDataViewModel);
+        observeLiabilityItemList(sharedDataViewModel);
+
+    }
+
+    private void observeAssetItemList(SharedDataViewModel sharedDataViewModel) {
+        sharedDataViewModel.getAssetZakatItemList().observe(getViewLifecycleOwner(), new Observer<ArrayList<ZakatItemModel>>() {
+            @Override
+            public void onChanged(ArrayList<ZakatItemModel> zakatItemModels) {
+                assetsList = zakatItemModels;
+            }
+        });
+    }
+
+    private void observeLiabilityItemList(SharedDataViewModel sharedDataViewModel) {
         sharedDataViewModel.getLiabilityZakatItemList().observe(getViewLifecycleOwner(), new Observer<ArrayList<ZakatItemModel>>() {
             @Override
             public void onChanged(ArrayList<ZakatItemModel> zakatItemModels) {
                 Log.d(TAG, "onChanged: Zakatitems Changed Rent: " + zakatItemModels.get(0).getAmount());
                 liabilitiesList = zakatItemModels;
-            }
-        });
-
-        sharedDataViewModel.getAssetZakatItemList().observe(getViewLifecycleOwner(), new Observer<ArrayList<ZakatItemModel>>() {
-            @Override
-            public void onChanged(ArrayList<ZakatItemModel> zakatItemModels) {
-                assetsList = zakatItemModels;
             }
         });
     }
@@ -88,23 +95,19 @@ public class CalculateFragment extends Fragment {
 
     private double calculateAssets() {
 
-        double total =0;
-        for (int i=0; i<assetsList.size(); i++) {
-            if(!assetsList.get(i).getAmount().isEmpty()) {
+        double total = 0;
+        for (int i = 0; i < assetsList.size(); i++) {
+            if (!assetsList.get(i).getAmount().isEmpty()) {
                 String string = assetsList.get(i).getItem();
-                String value  = assetsList.get(i).getAmount();
+                String value = assetsList.get(i).getAmount();
                 if (!value.isEmpty()) {
                     double actualValue = Double.parseDouble(value);
                     if (string.equals("Gold(g)")) {
                         double goldCalc = 0; //(actualValue / GRAM_TO_OUNCE_DIVIDER) * 1;
-                        //Log.v("Calculation", "gold(g|oz)[" + actualValue + "|" +
-                              //  (actualValue/GRAM_TO_OUNCE_DIVIDER) + "] goldvalue[ " + mGoldValue + "][adding asset " + string + "[" + goldCalc + "]");
                         total += goldCalc;
 
                     } else if (string.equals("Silver(g)")) {
                         double silverCalc = 0; //(actualValue / GRAM_TO_OUNCE_DIVIDER) * mSilverValue;
-                       // Log.v("Calculation", "silver(g|oz)[" + actualValue + "|" +
-                                //(actualValue/GRAM_TO_OUNCE_DIVIDER) + "] silverValue[ " + mSilverValue + "][adding asset " + string + "[" + silverCalc + "]");
                         total += silverCalc;
 
                     } else {
@@ -121,18 +124,14 @@ public class CalculateFragment extends Fragment {
 
     private double calculateLiabilities() {
 
-        double total =0;
-        for (int i=0; i<liabilitiesList.size(); i++) {
-            if(!liabilitiesList.get(i).getAmount().isEmpty()) {
+        double total = 0;
+        for (int i = 0; i < liabilitiesList.size(); i++) {
+            if (!liabilitiesList.get(i).getAmount().isEmpty()) {
                 String string = liabilitiesList.get(i).getItem();
                 String value = liabilitiesList.get(i).getAmount();
-
-                if(!value.isEmpty()) {
-                    double actualValue = Double.parseDouble(value);
-                    total += actualValue;
-                    Log.v("Calculation", "adding liability " + string + "[" + actualValue + "]");
-
-                }
+                double actualValue = Double.parseDouble(value);
+                total += actualValue;
+                Log.v("Calculation", "adding liability " + string + "[" + actualValue + "]");
             }
         }
         return total;
@@ -142,8 +141,6 @@ public class CalculateFragment extends Fragment {
         button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //amountPay.setText(liabilitiesList.get(0).getAmount());
-
                 double nisaabValue = calculateNisaab();
                 double totalAssets = calculateAssets(); // get total assets
                 double totalLiabilities = calculateLiabilities(); // get total liabilities
@@ -151,20 +148,17 @@ public class CalculateFragment extends Fragment {
                 double netWorth = totalAssets - totalLiabilities;
                 Log.v("Calculation", "netWorth[" + netWorth + "]");
 
-                if(netWorth > nisaabValue) {
+                if (netWorth > nisaabValue) {
                     double zakatToPay = netWorth * 0.025;
-                    //mCalculateFragment.calculateResult("yes", String.valueOf(zakatToPay), String.valueOf(nisaabValue), String.valueOf(netWorth));
                     // put the values in UI
-                    zakatEligible.setText("yes");
+                    zakatEligible.setText(R.string.zakat_eligible_yes);
                     nisaabAmount.setText(String.valueOf(nisaabValue));
                     netWorthAmount.setText(String.valueOf(netWorth));
                     amountPay.setText(String.valueOf(zakatToPay));
                     Log.v("Calculation", "can pay zakat");
-                }
-                else{
-                    //mCalculateFragment.calculateResult("No", "0", String.valueOf(nisaabValue), String.valueOf(netWorth));
+                } else {
                     Log.v("Calculation", "not eligible to pay zakat");
-                    zakatEligible.setText("no");
+                    zakatEligible.setText(R.string.zakat_eligible_no);
                     nisaabAmount.setText(String.valueOf(nisaabValue));
                     netWorthAmount.setText(String.valueOf(netWorth));
                     amountPay.setText("0");
@@ -192,4 +186,10 @@ private void setFragmentListener(FragmentManager fragmentManager) {
             }
         });
     }
+ */
+
+
+/*
+// Log.v("Calculation", "silver(g|oz)[" + actualValue + "|" +
+                                //(actualValue/GRAM_TO_OUNCE_DIVIDER) + "] silverValue[ " + mSilverValue + "][adding asset " + string + "[" + silverCalc + "]");
  */
